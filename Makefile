@@ -18,6 +18,9 @@ OBJS = $(patsubst %,$(OBJ_DIR)/%,$(_OBJ))
 
 .PHONY: all clean $(PROG_NAME)
 
+# ensure BIN_DIR exists
+all: $(PROG_NAME) | $(BIN_DIR)
+
 $(BIN_DIR):
 	mkdir -p $(BIN_DIR)
 
