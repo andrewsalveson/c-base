@@ -1,5 +1,5 @@
-PROG_NAME = howdy
-LIBS      = -lm
+PROG_NAME = threaderator 
+LIBS      = -lm -lpthread
 SRC_DIR   = src
 LIB_DIR   = lib
 BIN_DIR   = bin
@@ -11,7 +11,7 @@ CFLAGS    = -I$(INC_DIR)
 
 DEPS = $(wildcard $(INC_DIR)/*.h)
 
-_OBJ = main.o func.o
+_OBJ = main.o 
 #_OBJ = $(wildcard $(SRC_DIR)/*.c) 
 OBJS = $(patsubst %,$(OBJ_DIR)/%,$(_OBJ))
 #OBJS = $(OBJ_DIR)/$(notdir $(_OBJ:.c=.o))
