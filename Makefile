@@ -11,7 +11,8 @@ CFLAGS    = -I$(INC_DIR)
 
 DEPS = $(wildcard $(INC_DIR)/*.h)
 
-_OBJ = main.o 
+
+_OBJ = main.o producer.o consumer.o 
 #_OBJ = $(wildcard $(SRC_DIR)/*.c) 
 OBJS = $(patsubst %,$(OBJ_DIR)/%,$(_OBJ))
 #OBJS = $(OBJ_DIR)/$(notdir $(_OBJ:.c=.o))
