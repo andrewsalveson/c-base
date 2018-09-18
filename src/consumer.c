@@ -16,6 +16,7 @@ void *consumer (void *param) {
       num--;
     pthread_mutex_unlock(&m);
 
+    // pretend we're doing some work here
     for(int r = 0; r < rand(); r++){
       usleep(1);
     }
