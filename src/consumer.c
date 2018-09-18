@@ -1,4 +1,5 @@
 #include <consumer.h>
+#include <unistd.h>
 
 void *consumer (void *param) {
   int i;
@@ -15,9 +16,18 @@ void *consumer (void *param) {
       num--;
     pthread_mutex_unlock(&m);
 
+    for(int r = 0; r < rand(); r++){
+      usleep(1);
+    }
+
     // use signal OUTSIDE of locked code to avoid
     // spurious wakeups
     pthread_cond_signal(&c_prod); // we only consumed 1
-    printf("Consumer value %d\n", i); fflush(stdout);
+    results[i] = 1;
+    for(int j = 0; j < NUM_JOBS; j++){
+      printf("%d ", results[j]);
+    }
+    printf("\n");
+    //printf("Consumer value %d\n", i); fflush(stdout);
   }
 }

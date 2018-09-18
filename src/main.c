@@ -5,27 +5,38 @@
 #include <producer.h>
 #include <consumer.h>
 
+int results[NUM_JOBS]; // storage for job results
 int buffer[BUF_SIZE]; // size of shared buffer
 int add = 0; // place to add next elem
 int rem = 0; // place to remove next elem
 int num = 0; // number elems in buffer
 
-pthread_mutex_t m = PTHREAD_MUTEX_INITIALIZER; // mutex lock for buffer
-pthread_cond_t c_cons = PTHREAD_COND_INITIALIZER; // consumer waits on cv
-pthread_cond_t c_prod = PTHREAD_COND_INITIALIZER; // producer waits on cv
+pthread_mutex_t m = PTHREAD_MUTEX_INITIALIZER; 
+pthread_cond_t c_cons = PTHREAD_COND_INITIALIZER;
+pthread_cond_t c_prod = PTHREAD_COND_INITIALIZER;
 
 int main(int argc, char *argv[]) {
-  pthread_t tid1, tid2; // thread identifiers
+  // array of thread identifiers
+  pthread_t tid[NUM_THREADS];
   int i;
-  if (pthread_create(&tid1, NULL, producer, NULL) != 0) {
+  // first thread is producer
+  if (pthread_create(&tid[0], NULL, producer, NULL) != 0) {
     fprintf(stderr, "Unable to create producer thread\n");
     exit (1);
   }
-  if (pthread_create(&tid2, NULL, consumer, NULL) != 0) {
-    fprintf(stderr, "Unable to create consumer thread\n");
-    exit (1);
+  // the rest are all consumers
+  for(int t = 1; t < NUM_THREADS; t++){
+    if (pthread_create(&tid[t], NULL, consumer, NULL) != 0) {
+      fprintf(stderr, "Unable to create consumer thread\n");
+      exit (1);
+    }
   }
-  pthread_join(tid1, NULL); // wait for producer to exit
-  pthread_join(tid2, NULL); // wait for consumer to exit
+  // join all threads
+  for(int t = 0; t < NUM_THREADS; t++){
+    pthread_join(tid[t], NULL);
+  }
   printf("Parent quitting\n");
+
+  exit(0);
+  return 0;
 }

@@ -3,7 +3,9 @@
 
 #include <pthread.h>
 
-#define BUF_SIZE 3    // size of shared buffer
+#define NUM_JOBS 30   // number of jobs
+#define BUF_SIZE 5    // size of shared buffer
+#define NUM_THREADS 10// number of threads
 
 int buffer[BUF_SIZE]; // shared buffer
 int add; // place to add next elem

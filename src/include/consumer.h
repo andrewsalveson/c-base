@@ -7,6 +7,7 @@
 #include <pthread.h>
 
 extern int buffer[]; // shared buffer
+extern int results[];// local storage
 extern int add;      // place to add next elem
 extern int rem;      // place to remove next elem
 extern int num;      // number elems in buffer
